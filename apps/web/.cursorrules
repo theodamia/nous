@@ -1,0 +1,92 @@
+# React / TypeScript / TanStack Router Best Practices
+
+## Architecture
+
+- **Feature-based architecture** (Bulletproof React pattern):
+  - Organize code by features, not by file types
+  - Each feature should be self-contained with its own components, hooks, utils, types, etc.
+  - Structure: `src/features/{feature-name}/` containing:
+    - `components/` - Feature-specific components
+    - `hooks/` - Feature-specific hooks
+    - `utils/` - Feature-specific utilities
+    - `types.ts` - Feature-specific types
+    - `index.ts` - Public API exports
+  - Shared code goes in `src/shared/` or `src/lib/`
+
+## Component Guidelines
+
+- **All components must be function components** - No class components
+- **Use kebab-case for file and folder names**: `user-profile.tsx`, `auth-form.tsx`, `feature-name/`
+- **Component files should use PascalCase**: `UserProfile.tsx` inside `user-profile.tsx` file
+- **Export components as named exports**, not default exports (except for route files)
+- **Use TypeScript interfaces/types** for all props - no `any` types
+- **Props interfaces should be named**: `{ComponentName}Props` (e.g., `UserProfileProps`)
+
+## No Magic Numbers
+
+- **Extract all magic numbers to named constants**
+- Create constants files: `src/constants/` or feature-specific `constants.ts`
+- Use descriptive names: `MAX_RETRY_ATTEMPTS = 3` instead of `3`
+- For time-based values, use descriptive units: `DEBOUNCE_DELAY_MS = 300`
+- For sizes, use semantic names: `MODAL_MAX_WIDTH = 600` instead of `600`
+
+## TypeScript Best Practices
+
+- **Strict typing**: Avoid `any`, use `unknown` when type is truly unknown
+- **Use type inference** when types are obvious, explicit types when they add clarity
+- **Define interfaces/types** for all data structures, API responses, and component props
+- **Use `const` assertions** for readonly data: `as const`
+- **Prefer `interface` over `type`** for object shapes (unless you need union/intersection types)
+- **Use utility types**: `Pick`, `Omit`, `Partial`, `Required`, `Readonly` when appropriate
+- **Type all function parameters and return types** explicitly for public APIs
+
+## TanStack Router Best Practices
+
+- **Route files**: Use `__root.tsx` for root layout, kebab-case for route files
+- **Route structure**: Mirror URL structure in file structure
+- **Use route loaders** for data fetching, not `useEffect` in components
+- **Type-safe routes**: Always define route params and search params with TypeScript
+- **Use route context** for shared data across routes
+- **Lazy load routes** when appropriate for code splitting
+- **Route files should export default** the route component
+
+## React Best Practices
+
+- **Hooks**:
+  - Custom hooks should start with `use` prefix and use kebab-case files: `use-user-data.ts`
+  - Extract complex logic into custom hooks
+  - Follow Rules of Hooks: only call hooks at the top level
+- **State Management**:
+  - Use TanStack Query for server state
+  - Use `useState` for local component state
+  - Use `useReducer` for complex state logic
+  - Consider context only when needed across multiple components
+- **Performance**:
+  - Use `React.memo` for expensive components (sparingly)
+  - Use `useMemo` and `useCallback` only when profiling shows they're needed
+  - Avoid premature optimization
+- **Event Handlers**: Use descriptive names: `handleSubmit`, `handleClick`, not `onClick` or `submit`
+
+## Code Organization
+
+- **File naming**: All files use kebab-case: `user-profile.tsx`, `use-auth.ts`, `api-client.ts`
+- **One component per file** (except for closely related components)
+- **Co-locate related code**: Keep components, hooks, and utils close to where they're used
+- **Barrel exports**: Use `index.ts` files to create clean public APIs for features
+
+## General Guidelines
+
+- **Error handling**: Always handle errors explicitly, use error boundaries for React errors
+- **Accessibility**: Use semantic HTML, ARIA attributes when needed, keyboard navigation
+- **Testing**: Write tests for business logic and critical user flows
+- **Documentation**: Add JSDoc comments for complex functions and public APIs
+- **Imports**: Use absolute imports via path aliases (configure in `tsconfig.json` and `vite.config.ts`)
+- **Formatting**: Use Biome for formatting and linting (already configured)
+
+## Shadcn Instructions
+
+Use the latest version of Shadcn to install new components, like this command to add a button component:
+
+```bash
+pnpm dlx shadcn@latest add button
+```

@@ -1,0 +1,40 @@
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+apps/web/dist/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Test
+coverage.out
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temp
+tmp/
+*.tmp

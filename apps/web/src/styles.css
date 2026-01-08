@@ -135,4 +135,14 @@ code {
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Hack Shadcn to prevent scroll locking when drawer/dialog is open */
+  html body[data-scroll-locked] {
+    overflow-y: scroll !important;
+    margin-right: 0px !important;
+  }
+
+  body[data-scroll-locked='1'] {
+    overflow: auto !important;
+  }
 }
